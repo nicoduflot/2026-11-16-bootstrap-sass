@@ -1,0 +1,14 @@
+// custom-01.scss
+
+// Première méthode de customisation de bootstrap : tout prendre et surcharger ensuite
+
+// 1. si on ajoute des variables personnalisées, c'est ici qu'il faut les intégrer
+// les fonctionq ne seront pas disponibles
+
+// 2. On importe les scss qui crée le bootstrap complet
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+// on ajoute notre surcharge en scss
+
+// création d'un @font-face pour changer l'apparence des titre 
