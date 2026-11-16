@@ -1,0 +1,195 @@
+@use "sass:map";
+// commentaire en une ligne : n'apparaît pas dans le fichier compilé
+/* Commentaire en bloc, apparaît dans le fichier compilé*/
+
+// Variables
+// Déplacement des variables et des listes dans un fichier partiel
+// nommé _variables.scss dans un répertoire /partials
+@import "./partials/variables";
+
+// les variables :
+// $black-color: #333;
+// $white-color: #fff;
+// $code-color: #d63384;
+// corps des pages
+// $body-font: Arial, Verdana, Geneva, Tahoma, sans-serif;
+// $body-bg: #f4f5f0;
+// $body-color: $black-color;
+// $body-font-size: 1.2rem;
+// goutières
+// $gutter-x: 0.5rem;
+// $gutter-y: 0.5rem;
+// les listes :
+//$breakPointList: 540px, 690px, 720px;
+
+// Les maps : tableau clef: valeur
+// pour pouvoir utiliser les maps créées, il faut préciser que l'on utilise maps on ajoute en début de fichier scss 
+// @use "sass:map";
+
+$breakpoints: (
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px,
+);
+
+$rwd-max-width: (
+    sm: 540,
+    md: 720,
+    lg: 960,
+    xl: 1140,
+    xxl: 1320,
+);
+// diviser le contenu d'une row en colonnes par rapport à la largeur d'écran
+$rwd-columns: (
+    sm: 1,
+    md: 2,
+    lg: 3,
+    xl: 3,
+    xxl: 4,
+);
+
+// les mixins
+
+@mixin alert($alert: lightblue){
+    background-color: $alert;
+    box-shadow: 0 0 1px rgba($alert, 0.25);
+}
+
+@mixin links($color: darkblue, $hover: darkred){
+    // on peu utiliser le nesting dans les mixins
+    a{
+        color: $color;
+        &:hover{
+            color: $hover;
+        }
+    }
+}
+
+// css a compiler
+// root
+:root{
+    font-size: $body-font-size;
+    font-family: $body-font;
+    color: $body-color;
+    background-color: $body-bg;
+}
+
+// Déclarations générales
+
+// calcul des tailles de boîte
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+code{
+    color: $code-color;
+}
+
+pre{
+    overflow: auto;
+}
+
+// déclaration de classes
+// layout
+.container{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    padding: $gutter-y $gutter-x;
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    > *{
+        width: 100%;
+        max-width: 100%;
+        padding: $gutter-x $gutter-y;
+        &:is(img){
+            background-color: $body-color;
+        }
+    }
+}
+
+// media
+.img-fluid{
+    width: unset;
+    max-width: 100%;
+}
+
+.message{
+    margin: $gutter-y $gutter-x;
+    padding: $gutter-y $gutter-x;
+    border-radius: calc($gutter-x/2);
+}
+
+// mixin alert
+.info{
+    @include alert;
+}
+
+.danger{
+    @include alert($alert: orange);
+}
+
+.success{
+    @include alert($alert: lightgreen);
+}
+
+// Il est possible de faire de boucles en sass */
+@each $breakpoint in $breakPointList{
+    .maxWidth#{$breakpoint}{
+        max-width: #{$breakpoint};
+    }
+}
+
+// Déclaration selon la structure
+
+body{
+    margin: 0;
+    a {
+        text-decoration: none;
+    }
+
+    > {
+        nav{
+            ul{
+                list-style-type: none;
+                margin: 0;
+                li{
+                    @include links;
+                }
+            }
+        }
+        footer{
+            @include links;
+            nav{
+                ul{
+                    list-style-type: none;
+                    padding: 0;
+                    li{
+                        @include links($color: darkred, $hover: darkblue);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// media-queries
+// on va boucler sur 2 maps pour générer les media queries 
+// et pour générer dans chaque media querie la surcharge de la classe container
+
+@each $breakpoint, $value in $breakpoints {
+    @media screen and (min-width: #{$value}) {
+        .container{
+            max-width: #{map.get($rwd-max-width, $breakpoint)}px;
+        }
+
+        .row > *{
+            max-width: calc( 100% / map.get($rwd-columns, $breakpoint ) );
+        }        
+    }
+}
