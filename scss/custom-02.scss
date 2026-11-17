@@ -1,0 +1,82 @@
+// custom-02-.scss
+
+// Deuxième méthode : intégrer au choix des éléments de bootstrap
+
+// il y a des partials obligatoires avant de faire ses chaoix dans les éléments dont on a besoin
+
+// 1. Ajouter les fonctions (pour pouvoir manipuler les couleurs, les svg...)
+
+@import '../node_modules/bootstrap/scss/functions';
+
+// 2. Si on doit surcharger les variables, c'est ici :
+
+// 3. Inclure les partials requis pour les feuilles de styles
+
+@import '../node_modules/bootstrap/scss/variables';
+@import '../node_modules/bootstrap/scss/variables-dark';
+
+// 4. Ici les surcharge de maps
+
+// ajouter un breakpoint à bootstrap
+$cs-grid-breakpoints: (
+    xxxl: 1600px
+);
+
+$cs-container-max-widths: (
+    xxxl: 1560px
+);
+
+$grid-breakpoints: map-merge($grid-breakpoints, $cs-grid-breakpoints);
+$container-max-widths: map-merge($container-max-widths, $cs-container-max-widths);
+
+// 5. Inclure les autres partials nécessaire avant le choix des élément optionnels
+
+@import '../node_modules/bootstrap/scss/maps';
+@import '../node_modules/bootstrap/scss/mixins';
+@import '../node_modules/bootstrap/scss/root';
+
+// 6. les parties optionnelles
+/* utilities */
+@import '../node_modules/bootstrap/scss/reboot';
+@import '../node_modules/bootstrap/scss/containers';
+
+// 7. on inclu en dernier les utilitaires d'API afin de générer les classes basées sur les map de sass (utilities.scss)
+
+// 8. Ajouter les scss custom pour personnaliser l'appli 
+
+// font pour les titres
+@font-face {
+    font-family: 'hemihead';
+    src: url('./fonts/HemiHeadBdIt.eot');
+    src: url('./fonts/HemiHeadBdIt.eot') format('embed-opentype'), 
+         url('./fonts/HemiHeadBdIt.ttf') format('truetype'),
+         url('./fonts/HemiHeadBdIt.woff') format('woff'),
+         url('./fonts/HemiHeadBdIt.woff2') format('woff2');
+}
+
+h3, .h3, h2, .h2, h1, .h1{
+    font-family: 'hemihead';
+}
+
+// enlever les puces des listes ul .nav-cs remplacer par icones bootstrap
+
+ul.nav-cs{
+    list-style-type: none;
+    padding: 0;
+    li{
+        &::before{
+            display: inline-block;
+            font-family: 'bootstrap-icons' !important;
+            font-style: normal;
+            font-weight: normal !important;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            vertical-align: -.125em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            content: '\F137';
+            margin-right: 0.5rem;
+        }
+    }
+}
