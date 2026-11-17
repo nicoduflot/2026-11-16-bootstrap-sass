@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("../node_modules/bootstrap-icons/font/bootstrap-icons.scss");
 /* Commentaire en bloc, apparaît dans le fichier compilé*/
 :root {
   font-size: 1.2rem;
