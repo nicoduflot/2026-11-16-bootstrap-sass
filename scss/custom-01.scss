@@ -11,4 +11,17 @@
 
 // on ajoute notre surcharge en scss
 
-// création d'un @font-face pour changer l'apparence des titre 
+// création d'un @font-face pour changer l'apparence des titre
+
+@font-face {
+    font-family: 'hemihead';
+    src: url('./fonts/HemiHeadBdIt.eot');
+    src: url('./fonts/HemiHeadBdIt.eot') format('embed-opentype'), 
+         url('./fonts/HemiHeadBdIt.ttf') format('truetype'),
+         url('./fonts/HemiHeadBdIt.woff') format('woff'),
+         url('./fonts/HemiHeadBdIt.woff2') format('woff2');
+}
+
+h3, .h3, h2, .h2, h1, .h1{
+    font-family: 'hemihead';
+}
